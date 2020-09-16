@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>简单双向数据绑定</title>
+</head>
+
+<body>
+    <div class="flex">
+        <div>
+            请输入：<input id='input' />
+        </div>
+        <div style="margin-left: 20px;">
+            <span id='span'></span>
+        </div>
+    </div>
+</body>
+<script>
+    const data = {};
+    Object.defineProperty(data, 'text', {
+        get: function() {
+            console.log('获取 text');
+        },
+        set: function(newValue) {
+            console.log('改变 text:' + newValue);
+            document.getElementById('input').value = newValue;
+            document.getElementById('span').innerHTML = newValue;
+        }
+    });
+
+    const input = document.getElementById('input');
+    input.addEventListener('keyup', function(e) {
+        data.text = e.target.value;
+    })
+</script>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+</html>

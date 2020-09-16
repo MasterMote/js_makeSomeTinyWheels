@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟apply的实现</title>
+</head>
+<script>
+    Object.prototype.selfApply = function(obj, arr) {
+        let result, args = []
+        obj.fn = this
+        if (!arr) {
+            result = obj.fn()
+        } else {
+            for (let i = 0, len = arr.length; i <= len; i++) {
+                args.push(arr[i])
+            }
+            result = obj.fn(...args)
+        }
+        delete obj.fn
+        return obj
+    }
+
+    let obj = {
+        name: '德玛西亚'
+    }
+
+    function func(school, location) {
+        console.log(this.name + school + '在' + location)
+    }
+
+    func.selfApply(obj, ['学院', '上海'])
+</script>
+
+
+
+<body>
+
+</body>
+
+</html>

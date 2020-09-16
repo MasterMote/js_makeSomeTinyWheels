@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟apply的实现</title>
+</head>
+<script>
+    Object.prototype.selfApply = function(obj, arr) {
+        let result, args = []
+        obj.fn = this
+        if (!arr) {
+            result = obj.fn()
+        } else {
+            for (let i = 0, len = arr.length; i <= len; i++) {
+                args.push(arr[i])
+            }
+            result = obj.fn(...args)
+        }
+        delete obj.fn
+        return obj
+    }
+
+    //-----------------第一版 模拟返回一个函数---------------------
+    // Function.prototype.selfBind = function(obj) {
+    //     return function() {
+    //         this.selfApply(context);
+    //     }
+
+    // }
+
+    // ------------------第二部 模拟bind中带参数，调用时带参数-----------------
+
+    Function.prototype.selfBind = function(obj) {
+        //截取bind传入的第二个参数
+        let args1 = Array.prototype.slice.call(arguments, 1)
+        return function() {
+            //截取bind返回的函数调用的参数
+            let args2 = Array.prototype.slice.call(arguments)
+            this.selfApply(obj, [...args1, ...args2]);
+        }
+
+    }
+</script>
+
+
+
+<body>
+</body>
+
+</html>

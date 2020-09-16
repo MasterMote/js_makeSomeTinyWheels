@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<script>
+    function debounce(func, delay) {
+        let timer
+        return function() {
+            if (timer) {
+                clearTimeout(timer)
+                timer = setTimeout(func, delay)
+            } else {
+                timer = setTimeout(func, delay)
+            }
+        }
+    }
+
+    function handle() {
+        console.log(Math.random())
+    }
+
+    document.addEventListener('click', debounce(handle, 1000))
+</script>
+
+<body>
+</body>
+
+</html>

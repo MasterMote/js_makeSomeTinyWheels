@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+    // // --------------- 第一版 ----------————------------
+    // Object.prototype.selfCall = function(obj) {
+    //     // 1.给obj添加一个调用call方法的这个对象的方法
+    //     obj.fn = this;
+    //     //2.调用这个方法
+    //     obj.fn()
+    //     // 3.删除这个方法
+    //     delete obj.fn
+    // }
+
+    // var foo = {
+    //     value: 1
+    // };
+
+    // function bar() {
+    //     console.log(this.value);
+    // }
+
+    // bar.selfCall(foo); //1
+
+    // // --------------- 第二版    加入参数-------------------
+    // Object.prototype.selfCall = function(obj) {
+    //     //1.获取传入参数
+    //     let args = []
+    //     for (let i = 1, len = arguments.length; i < len; i++) {
+    //         args.push(arguments[i])
+    //     }
+    //     // 2.给obj添加一个（调用call的这个对象）的方法，也就是说将调用call方法的这个方法加到obj中去
+    //     obj.fn = this;
+    //     //2.调用这个方法
+    //     obj.fn(...args)
+    //     // 3.删除这个方法
+    //     delete obj.fn
+    // }
+    // var foo = {
+    //     value: 1
+    // };
+
+    // function bar(name, age) {
+    //     console.log(name)
+    //     console.log(age)
+    //     console.log(this.value);
+    // }
+    // bar.selfCall(foo, 'kevin', 18);
+
+    // ---------------第三版   第一个默认值为window，函数有返回值------------
+    Object.prototype.selfCall = function(obj = window) {
+        let args = []
+        for (let i = 1, len = arguments.length; i < len; i++) {
+            args.push(arguments[i])
+        }
+        obj.fn = this
+        result = obj.fn(...args)
+        delete obj.fn
+        return result
+    }
+
+    var value = 2;
+
+    var obj = {
+        value: 1
+    }
+
+    function bar(name, age) {
+        console.log(this.value);
+        return {
+            value: this.value,
+            name: name,
+            age: age
+        }
+    }
+
+    bar.call(null); // 2
+
+    console.log(bar.selfCall(obj, 'kevin', 18));
+</script>
+
+<body>
+</body>
+
+</html>
